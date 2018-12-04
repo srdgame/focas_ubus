@@ -50,3 +50,11 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+
+*~
+*.un~
+*.swp
+focas
+build
+tags

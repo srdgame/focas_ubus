@@ -1,0 +1,9 @@
+[submodule "deps/ubus"]
+	path = deps/ubus
+	url = git://git.openwrt.org/project/ubus.git
+[submodule "deps/libubox"]
+	path = deps/libubox
+	url = git://git.openwrt.org/project/libubox.git
+[submodule "deps/json"]
+	path = deps/json
+	url = https://github.com/json-c/json-c.git
