@@ -25,7 +25,7 @@ static struct blob_buf b;
 #include "rdalminfo.c"
 #include "rdalmmsg.c"
 #include "rdalmmsg2.c"
-#include "rdalmmsg3.c"
+//#include "rdalmmsg3.c"
 #include "getdtailerr.c"
 #include "rdexecprog.c"
 #include "rdpmcrng.c"
@@ -50,7 +50,7 @@ static const struct ubus_method focas_methods[] = {
 	FOCAS_METHOD(rdalminfo),
 	FOCAS_METHOD(rdalmmsg),
 	FOCAS_METHOD(rdalmmsg2),
-	FOCAS_METHOD(rdalmmsg3),
+	//FOCAS_METHOD(rdalmmsg3),
 	FOCAS_METHOD(getdtailerr),
 	FOCAS_METHOD(rdexecprog),
 	FOCAS_METHOD(rdpmcrng),

@@ -31,10 +31,13 @@ static int focas_rdspdlname(struct ubus_context *ctx, struct ubus_object *obj,
 	if (tb[RDSPDLNAME_M])
 		m = blobmsg_get_u32(tb[RDSPDLNAME_M]);
 
+	/*
 	if (m != 0)
 		ret = cnc_rdspdlnamem(handle, &number, data);
 	else
 		ret = cnc_rdspdlname(handle, &number, data);
+		*/
+	ret = cnc_rdspdlname(handle, &number, data);
 
 	blob_buf_init(&b, 0);
 	blobmsg_add_u32(&b, "rc", ret);
