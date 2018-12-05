@@ -20,7 +20,6 @@ struct focas_connection g_connections[MAX_CONNECTION];
 
 static struct ubus_context *ctx;
 static struct blob_buf b;
-static int g_closing = 0;
 
 static short find_connection(const char* ip, uint16_t port, uint32_t peer, int shared, unsigned short *handle) {
 	uint32_t hash[4];
@@ -164,6 +163,7 @@ static void server_main(void)
 
 int main(int argc, char **argv)
 {
+	printf("Focas ubus service start...\n");
 	const char *ubus_socket = NULL;
 	int ch;
 	short ret;

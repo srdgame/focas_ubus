@@ -43,7 +43,7 @@ static int focas_quit(struct ubus_context *ctx, struct ubus_object *obj,
 		return -1;
 	}
  
-	it.it_interval.tv_sec = quit_time;
+	it.it_interval.tv_sec = 0;
 	it.it_interval.tv_nsec = 0;
 	it.it_value.tv_sec = quit_time;
 	it.it_value.tv_nsec = 0;
