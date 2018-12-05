@@ -28,7 +28,11 @@ static int focas_disconnect(struct ubus_context *ctx, struct ubus_object *obj,
 		goto _END;
 	}
 	ret = cnc_freelibhndl(handle);
+	if (ret == EW_OK) {
+		close_connection(handle);
+	}
 _END:
+	CHECK_FOCAS_RET(ret);
 	blob_buf_init(&b, 0);
 	blobmsg_add_u32(&b, "rc", ret);
 	ubus_send_reply(ctx, req, b.head);

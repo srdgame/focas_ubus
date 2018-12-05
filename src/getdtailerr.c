@@ -25,6 +25,7 @@ static int focas_getdtailerr(struct ubus_context *ctx, struct ubus_object *obj,
 
 	ret = cnc_getdtailerr(handle, &data);
 
+	CHECK_FOCAS_RET(ret);
 	blob_buf_init(&b, 0);
 	blobmsg_add_u32(&b, "rc", ret);
 	blobmsg_add_u32(&b, "err_no", data.err_no);

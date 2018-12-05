@@ -70,6 +70,7 @@ static int focas_axis(struct ubus_context *ctx, struct ubus_object *obj,
 	MAP_FUNCTION(slide)
 	MAP_FUNCTION(rdlnzlmcn)
 
+	CHECK_FOCAS_RET(ret);
 	blob_buf_init(&b, 0);
 	blobmsg_add_u32(&b, "rc", ret);
 	blobmsg_add_u32(&b, "index", data.type);

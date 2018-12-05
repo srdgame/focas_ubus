@@ -82,6 +82,7 @@ static int focas_rdpmcrng(struct ubus_context *ctx, struct ubus_object *obj,
 
 	ret = pmc_rdpmcrng(handle, adr_type, data_type, start, data->datano_e, buf_len, data);
 
+	CHECK_FOCAS_RET(ret);
 	blob_buf_init(&b, 0);
 	blobmsg_add_u32(&b, "rc", ret);
 	blobmsg_add_u32(&b, "addr_type", data->type_a);

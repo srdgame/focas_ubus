@@ -3,6 +3,7 @@ enum {
     CONNECT_IP,
     CONNECT_PORT,
     CONNECT_TIMEOUT,
+	CONNECT_SHARED,
     __CONNECT_MAX
 };
 
@@ -10,6 +11,7 @@ static const struct blobmsg_policy policy_connect[__CONNECT_MAX] = {
     [CONNECT_IP] = { .name = "ip", .type = BLOBMSG_TYPE_STRING },
     [CONNECT_PORT] = { .name = "port", .type = BLOBMSG_TYPE_INT32 },
     [CONNECT_TIMEOUT] = { .name = "timeout", .type = BLOBMSG_TYPE_INT32 },
+    [CONNECT_SHARED] = { .name = "shared", .type = BLOBMSG_TYPE_INT32 },
 };
 
 static int focas_connect(struct ubus_context *ctx, struct ubus_object *obj,
@@ -20,8 +22,9 @@ static int focas_connect(struct ubus_context *ctx, struct ubus_object *obj,
 	char *ip = NULL;
 	uint16_t port = 0;
 	uint32_t timeout = 0;
+	uint32_t shared = 1;
 	unsigned short handle = 0;
-	short ret = 0;
+	short ret = EW_OK;
 
 	blobmsg_parse(policy_connect, __CONNECT_MAX, tb, blob_data(msg), blob_len(msg));
 	if (!tb[CONNECT_IP] || !tb[CONNECT_PORT])
@@ -38,9 +41,18 @@ static int focas_connect(struct ubus_context *ctx, struct ubus_object *obj,
 			timeout = 5;
 		}
 	}
+	if (tb[CONNECT_SHARED]) {
+		shared = blobmsg_get_u32(tb[CONNECT_SHARED]);
+	}
+	ret = find_connection(ip, port, req->peer, shared, &handle);	
+	if (ret < MAX_CONNECTION && handle == INVALID_HANDLE ) {
+		ret = cnc_allclibhndl3(ip, port, timeout, &handle);
+		if (ret == EW_OK) {
+			set_connection(ret, handle);
+		}
+	}
 
-	ret = cnc_allclibhndl3(ip, port, timeout, &handle);
-
+	CHECK_FOCAS_RET(ret);
 	blob_buf_init(&b, 0);
 	blobmsg_add_u32(&b, "rc", ret);
 	blobmsg_add_u32(&b, "handle", handle);
