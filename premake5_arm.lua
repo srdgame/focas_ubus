@@ -5,7 +5,7 @@ workspace "focas_ubus"
 	
 project "focas_ubus"
 	kind "ConsoleApp"
-	language "C"
+	language "C++"
 	location "build/focas_ubus"
 	targetdir "bin/%{cfg.buildcfg}"
 	dependson { "libjson-c-static", "libubox-static", "libubus-static" }
@@ -24,7 +24,7 @@ project "focas_ubus"
 		--"./focas/x86"
 		"./focas/arm/"
 	}
-	links { "libubus-static", "libubox-static", "libjson-c-static", "fwlib32", "pthread", "stdc++", "rt"}
+	links { "libubus-static", "libubox-static", "libjson-c-static", "fwlib32", "pthread", "rt"}
 
 	filter "configurations:Debug"
 		defines { "DEBUG" }
