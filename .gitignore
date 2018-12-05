@@ -56,5 +56,6 @@ dkms.conf
 *.un~
 *.swp
 focas
+bin
 build
 tags

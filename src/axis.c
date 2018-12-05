@@ -11,7 +11,7 @@ static const struct blobmsg_policy policy_axis[__AXIS_MAX] = {
     [AXIS_HANDLE] = { .name = "handle", .type = BLOBMSG_TYPE_INT32 },
     [AXIS_FUNCTION] = { .name = "function", .type = BLOBMSG_TYPE_STRING },
     [AXIS_INDEX] = { .name = "index", .type = BLOBMSG_TYPE_INT32 },
-    [AXIS_INDEX] = { .name = "index2", .type = BLOBMSG_TYPE_INT32 },
+    [AXIS_INDEX2] = { .name = "index2", .type = BLOBMSG_TYPE_INT32 },
 };
 
 #define MAP_FUNCTION(NAME) \
