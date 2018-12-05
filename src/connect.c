@@ -18,7 +18,7 @@ static int focas_connect(struct ubus_context *ctx, struct ubus_object *obj,
 {
 	struct blob_attr *tb[__CONNECT_MAX];
 	char *ip = NULL;
-	uint16_t port = 0
+	uint16_t port = 0;
 	uint32_t timeout = 0;
 	unsigned short handle = 0;
 	short ret = 0;
