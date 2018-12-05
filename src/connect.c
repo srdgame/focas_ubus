@@ -18,7 +18,8 @@ static int focas_connect(struct ubus_context *ctx, struct ubus_object *obj,
 {
 	struct blob_attr *tb[__CONNECT_MAX];
 	char *ip = NULL;
-	uint32_t port, timeout = 0;
+	uint16_t port = 0
+	uint32_t timeout = 0;
 	unsigned short handle = 0;
 	short ret = 0;
 
@@ -28,12 +29,14 @@ static int focas_connect(struct ubus_context *ctx, struct ubus_object *obj,
 
 	ip = blobmsg_get_string(tb[CONNECT_IP]);
 	port = blobmsg_get_u32(tb[CONNECT_PORT]);
-	timeout = blobmsg_get_u32(tb[CONNECT_TIMEOUT]);
 	if (!ip || port <= 0) {
 		return UBUS_STATUS_UNKNOWN_ERROR;
 	}
-	if (timeout <= 0) {
-		timeout = 5;
+	if (tb[CONNECT_TIMEOUT]) {
+		timeout = blobmsg_get_u32(tb[CONNECT_TIMEOUT]);
+		if (timeout <= 0) {
+			timeout = 5;
+		}
 	}
 
 	ret = cnc_allclibhndl3(ip, port, timeout, &handle);
