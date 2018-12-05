@@ -35,11 +35,13 @@ chroot_setup() {
 	}
 
 chroot_teardown() {
-	for line in $(cat $MOUNTS_FILE )
-	do
-		umount ${line}
-	done
-	rm -f $MOUNTS_FILE
+	if [[ -f $MOUNTS_FILE ]]; then
+		for line in $(cat $MOUNTS_FILE )
+		do
+			umount ${line}
+		done
+		rm -f $MOUNTS_FILE
+	fi
 }
 
 usage() {
