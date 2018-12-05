@@ -1,3 +1,5 @@
+#include <time.h>
+#include <string.h>
 #include <unistd.h>
 #include <signal.h>
 
@@ -18,6 +20,7 @@ struct focas_connection g_connections[MAX_CONNECTION];
 
 static struct ubus_context *ctx;
 static struct blob_buf b;
+static int g_closing = 0;
 
 static short find_connection(const char* ip, uint16_t port, uint32_t peer, int shared, unsigned short *handle) {
 	uint32_t hash[4];
@@ -108,13 +111,7 @@ static void close_connection(unsigned short handle) {
 #include "getdtailerr.c"
 #include "rdexecprog.c"
 #include "rdpmcrng.c"
-
-static const struct blobmsg_policy policy_quit[0] = {};
-static int focas_quit(struct ubus_context *ctx, struct ubus_object *obj,
-		      struct ubus_request_data *req, const char *method,
-		      struct blob_attr *msg)
-{
-}
+#include "focas_quit.c"
 
 #define FOCAS_METHOD(NAME) \
 	UBUS_METHOD(#NAME, focas_##NAME, policy_##NAME)
