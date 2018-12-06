@@ -79,7 +79,7 @@ static int focas_rdpmcrng(struct ubus_context *ctx, struct ubus_object *obj,
 	data->datano_s = start;
 	data->datano_e = start + buf_len - 8;
 
-	ret = pmc_rdpmcrng(handle, adr_type, data_type, start, data->datano_e, buf_len, data);
+	ret = pmc_rdpmcrng(handle, adr_type, data_type, start, data->datano_e, length, data);
 
 	CHECK_FOCAS_RET(ret);
 	blob_buf_init(&b, 0);

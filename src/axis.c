@@ -51,7 +51,7 @@ static int focas_axis(struct ubus_context *ctx, struct ubus_object *obj,
 	if (tb[AXIS_INDEX2])
 		index2 = blobmsg_get_u32(tb[AXIS_INDEX2]);
 
-	fprintf(stderr, "Read axis handle:%u function:%s index:%d index2:%d\n", handle, func, index, index2);
+	//fprintf(stderr, "Read axis handle:%u function:%s index:%d index2:%d\n", handle, func, index, index2);
 
 	MAP_FUNCTION(absolute)
 	//MAP_FUNCTION(absolute_bg)

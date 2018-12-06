@@ -31,7 +31,15 @@ static int focas_rdalminfo(struct ubus_context *ctx, struct ubus_object *obj,
 	int i = 0;
 	void *cookie = NULL;
 	short number = 32;
-	ALMINFO data[32];
+	ALMINFO *data;
+	data = (ALMINFO*)malloc(sizeof(ALMINFO) * 32);
+	if (!data) {
+		blob_buf_init(&b, 0);
+		blobmsg_add_u32(&b, "rc", -1);
+		blobmsg_add_string(&b, "message", "No enough memory!");
+		ubus_send_reply(ctx, req, b.head);
+		return 0;
+	}
 	memset(data, 0, sizeof(ALMINFO) * 32);
 
 	blobmsg_parse(policy_rdalminfo, __RDALMINFO_MAX, tb, blob_data(msg), blob_len(msg));
@@ -41,7 +49,7 @@ static int focas_rdalminfo(struct ubus_context *ctx, struct ubus_object *obj,
 	handle = blobmsg_get_u32(tb[RDALMINFO_HANDLE]);
 	type = blobmsg_get_u32(tb[RDALMINFO_TYPE]);
 
-	ret = cnc_rdalminfo(handle, 1, type, number, data);
+	ret = cnc_rdalminfo(handle, 1, type, number * sizeof(ALMINFO), data);
 
 	CHECK_FOCAS_RET(ret);
 	blob_buf_init(&b, 0);
@@ -49,15 +57,10 @@ static int focas_rdalminfo(struct ubus_context *ctx, struct ubus_object *obj,
 
 	cookie = blobmsg_open_array(&b, "data");
 	for (i = 0; i < number; ++i) {
-		void* c1 = NULL;
+		if (data->u.alm2.alm[i].axis == -1)
+			break;
 		void* c2 = NULL;
-		c1 = blobmsg_open_array(&b, NULL);
-		ADD_ALMINFO(data[i].u.alm2.alm[0]);
-		ADD_ALMINFO(data[i].u.alm2.alm[1]);
-		ADD_ALMINFO(data[i].u.alm2.alm[2]);
-		ADD_ALMINFO(data[i].u.alm2.alm[3]);
-		ADD_ALMINFO(data[i].u.alm2.alm[4]);
-		blobmsg_close_array(&b, c1);
+		ADD_ALMINFO(data->u.alm2.alm[i]);
 	}
 	blobmsg_close_array(&b, cookie);
 
