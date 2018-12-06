@@ -26,12 +26,13 @@ static int focas_rdalminfo(struct ubus_context *ctx, struct ubus_object *obj,
 {
 	struct blob_attr *tb[__RDALMINFO_MAX];
 	unsigned short handle = 0;
-	short type = 0;
+	short type = -1;
 	short ret = 0;
 	int i = 0;
 	void *cookie = NULL;
-	ALMINFO data[32];
 	short number = 32;
+	ALMINFO data[32];
+	memset(data, 0, sizeof(ALMINFO) * 32);
 
 	blobmsg_parse(policy_rdalminfo, __RDALMINFO_MAX, tb, blob_data(msg), blob_len(msg));
 	if (!tb[RDALMINFO_HANDLE] || !tb[RDALMINFO_TYPE])
@@ -39,9 +40,6 @@ static int focas_rdalminfo(struct ubus_context *ctx, struct ubus_object *obj,
 
 	handle = blobmsg_get_u32(tb[RDALMINFO_HANDLE]);
 	type = blobmsg_get_u32(tb[RDALMINFO_TYPE]);
-	if (type < 0) {
-		return UBUS_STATUS_INVALID_ARGUMENT;
-	}
 
 	ret = cnc_rdalminfo(handle, 1, type, number, data);
 

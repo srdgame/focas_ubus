@@ -21,6 +21,7 @@ static int focas_rdspload(struct ubus_context *ctx, struct ubus_object *obj,
 	int i = 0;
 	void *cookie = NULL;
 	ODBSPN data;
+	memset(&data, 0, sizeof(data));
 
 	blobmsg_parse(policy_rdspload, __RDSPLOAD_MAX, tb, blob_data(msg), blob_len(msg));
 	if (!tb[RDSPLOAD_HANDLE])

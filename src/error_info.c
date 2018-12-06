@@ -43,6 +43,7 @@ static const char* get_error_info(short ret) {
 		case EW_PMCHANDLE: return "PMC handle error"; break;
 		case EW_RD_OVWSTP: return "overwrite stop in program read "; break;
 		case EW_RD_RSTFIN: return "reset interrupt in program read "; break;
+		case CONNECTION_FULL: return "Connection poll is full"; break;
 		default: return "Unknown Error"; break;
 	}
 }

@@ -34,6 +34,7 @@ static int focas_rdspmeter(struct ubus_context *ctx, struct ubus_object *obj,
 	void *cookie = NULL;
 	ODBSPLOAD data[MAX_AXIS];
 	short number = MAX_AXIS;
+	memset(data, 0, sizeof(ODBSPLOAD) * MAX_AXIS);
 
 	blobmsg_parse(policy_rdspmeter, __RDSPMETER_MAX, tb, blob_data(msg), blob_len(msg));
 	if (!tb[RDSPMETER_HANDLE])
@@ -52,8 +53,10 @@ static int focas_rdspmeter(struct ubus_context *ctx, struct ubus_object *obj,
 	cookie = blobmsg_open_array(&b, "data");
 	for (i = 0; i < number; ++i) {
 		void* c2 = NULL;
+		void* c1 = blobmsg_open_table(&b, NULL);
 		ADD_LOADELM(spload, data[i].spload);
 		ADD_LOADELM(spspeed, data[i].spspeed);
+		blobmsg_close_table(&b, c1);
 	}
 	blobmsg_close_array(&b, cookie);
 

@@ -22,6 +22,7 @@ static int focas_rdspdlname(struct ubus_context *ctx, struct ubus_object *obj,
 	void *cookie = NULL;
 	ODBSPDLNAME data[MAX_AXIS];
 	short number = MAX_AXIS;
+	memset(data, 0, sizeof(ODBSPDLNAME) * MAX_AXIS);
 
 	blobmsg_parse(policy_rdspdlname, __RDSPDLNAME_MAX, tb, blob_data(msg), blob_len(msg));
 	if (!tb[RDSPDLNAME_HANDLE])
@@ -45,10 +46,12 @@ static int focas_rdspdlname(struct ubus_context *ctx, struct ubus_object *obj,
 
 	cookie = blobmsg_open_array(&b, "data");
 	for (i = 0; i < number; ++i) {
+		void* c2 = blobmsg_open_table(&b, NULL);
 		blobmsg_add_u32(&b, "name", data[i].name);
 		blobmsg_add_u32(&b, "suff1", data[i].suff1);
 		blobmsg_add_u32(&b, "suff2", data[i].suff2);
 		blobmsg_add_u32(&b, "suff3", data[i].suff3);
+		blobmsg_close_table(&b, c2);
 	}
 	blobmsg_close_array(&b, cookie);
 

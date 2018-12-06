@@ -60,19 +60,18 @@ static int focas_rdpmcrng(struct ubus_context *ctx, struct ubus_object *obj,
 	}
 
 	if (length < sizeof(IODBPMC) ) {
-		data = (IODBPMC*)malloc(sizeof(IODBPMC));
-		memset(data, 0, sizeof(IODBPMC));
-	} else {
-		data = (IODBPMC*)malloc(length);
-		memset(data, 0, length);
+		length = sizeof(IODBPMC);
 	}
 
+	data = (IODBPMC*)malloc(length);
 	if (!data) {
 		blob_buf_init(&b, 0);
 		blobmsg_add_u32(&b, "rc", -1);
 		blobmsg_add_string(&b, "message", "No enough memory!");
 		ubus_send_reply(ctx, req, b.head);
+		return 0;
 	}
+	memset(data, 0, length);
 
 	ret = 0;
 	data->type_a = adr_type;

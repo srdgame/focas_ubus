@@ -15,7 +15,7 @@ static int focas_alarm2(struct ubus_context *ctx, struct ubus_object *obj,
 	struct blob_attr *tb[__ALARM2_MAX];
 	unsigned short handle = 0;
 	short ret = 0;
-	long data;
+	long data = 0;
 
 	blobmsg_parse(policy_alarm2, __ALARM2_MAX, tb, blob_data(msg), blob_len(msg));
 	if (!tb[ALARM2_HANDLE])

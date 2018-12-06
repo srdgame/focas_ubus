@@ -16,6 +16,7 @@ static int focas_alarm(struct ubus_context *ctx, struct ubus_object *obj,
 	unsigned short handle = 0;
 	short ret = 0;
 	ODBALM data;
+	memset(&data, 0, sizeof(data));
 
 	blobmsg_parse(policy_alarm, __ALARM_MAX, tb, blob_data(msg), blob_len(msg));
 	if (!tb[ALARM_HANDLE])
