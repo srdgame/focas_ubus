@@ -45,10 +45,10 @@ static int focas_rdspdlname(struct ubus_context *ctx, struct ubus_object *obj,
 
 	cookie = blobmsg_open_array(&b, "data");
 	for (i = 0; i < number; ++i) {
-		blobmsg_add_u32(&b, "name", data[i].name);
-		blobmsg_add_u32(&b, "suff1", data[i].suff1);
-		blobmsg_add_u32(&b, "suff2", data[i].suff2);
-		blobmsg_add_u32(&b, "suff3", data[i].suff3);
+		char buf[sizeof(ODBSPDLNAME) + 1];
+		memset(buf, 0, sizeof(ODBSPDLNAME) + 1);
+		memcpy(buf, &data[i], sizeof(ODBSPDLNAME));
+		blobmsg_add_string(&b, NULL, buf);
 	}
 	blobmsg_close_array(&b, cookie);
 

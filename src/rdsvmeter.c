@@ -14,9 +14,8 @@ static const struct blobmsg_policy policy_rdsvmeter[__RDSVMETER_MAX] = {
 	blobmsg_add_u32(&b, "data", DATA.data); \
 	blobmsg_add_u32(&b, "dec", DATA.dec); \
 	blobmsg_add_u32(&b, "unit", DATA.unit); \
-	blobmsg_add_u32(&b, "name", DATA.name); \
-	blobmsg_add_u32(&b, "suff1", DATA.suff1); \
-	blobmsg_add_u32(&b, "suff2", DATA.suff2); \
+	memcpy(buf, &DATA.name, 3); \
+	blobmsg_add_string(&b, "name", buf); \
 	blobmsg_add_u32(&b, "reserve", DATA.reserve); \
 	blobmsg_close_table(&b, c2); \
 
@@ -48,6 +47,8 @@ static int focas_rdsvmeter(struct ubus_context *ctx, struct ubus_object *obj,
 	cookie = blobmsg_open_array(&b, "data");
 	for (i = 0; i < number; ++i) {
 		void* c2 = NULL;
+		char buf[4];
+		memset(buf, 0, 4);
 		ADD_LOADELM(svload, data[i].svload);
 	}
 	blobmsg_close_array(&b, cookie);

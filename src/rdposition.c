@@ -17,8 +17,8 @@ static const struct blobmsg_policy policy_rdposition[__RDPOSITION_MAX] = {
 	blobmsg_add_u32(&b, "dec", DATA.dec); \
 	blobmsg_add_u32(&b, "unit", DATA.unit); \
 	blobmsg_add_u32(&b, "disp", DATA.disp); \
-	blobmsg_add_u32(&b, "name", DATA.name); \
-	blobmsg_add_u32(&b, "suff", DATA.suff); \
+	memcpy(buf, &DATA.name, 2); \
+	blobmsg_add_string(&b, "name", buf); \
 	blobmsg_close_table(&b, c2); \
 
 
@@ -52,6 +52,8 @@ static int focas_rdposition(struct ubus_context *ctx, struct ubus_object *obj,
 	cookie = blobmsg_open_array(&b, "data");
 	for (i = 0; i < number; ++i) {
 		void* c2 = NULL;
+		char buf[4];
+		memset(buf, 0, 4);
 		ADD_POSELM(abs, data[i].abs);
 		ADD_POSELM(mach, data[i].mach);
 		ADD_POSELM(rel, data[i].rel);
