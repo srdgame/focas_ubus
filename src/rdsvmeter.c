@@ -31,6 +31,7 @@ static int focas_rdsvmeter(struct ubus_context *ctx, struct ubus_object *obj,
 	void *cookie = NULL;
 	ODBSVLOAD data[MAX_AXIS];
 	short number = MAX_AXIS;
+	memset(data, 0, sizeof(ODBSVLOAD) * MAX_AXIS);
 
 	blobmsg_parse(policy_rdsvmeter, __RDSVMETER_MAX, tb, blob_data(msg), blob_len(msg));
 	if (!tb[RDSVMETER_HANDLE])

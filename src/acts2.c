@@ -21,6 +21,7 @@ static int focas_acts2(struct ubus_context *ctx, struct ubus_object *obj,
 	int i = 0;
 	void *cookie = NULL;
 	ODBACT2 data;
+	memset(&data, 0, sizeof(data));
 
 	blobmsg_parse(policy_acts2, __ACTS2_MAX, tb, blob_data(msg), blob_len(msg));
 	if (!tb[ACTS2_HANDLE])

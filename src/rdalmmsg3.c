@@ -10,7 +10,7 @@ static const struct blobmsg_policy policy_rdalmmsg3[__RDALMMSG3_MAX] = {
     [RDALMMSG3_TYPE] = { .name = "type", .type = BLOBMSG_TYPE_INT32 },
 };
 
-#define ADD_ALMMSG(DATA) \
+#define ADD_ALMMSG3(DATA) \
 	c2 = blobmsg_open_table(&b, NULL); \
 	blobmsg_add_u32(&b, "alm_no", DATA.alm_no); \
 	blobmsg_add_u32(&b, "type", DATA.type); \
@@ -32,8 +32,9 @@ static int focas_rdalmmsg3(struct ubus_context *ctx, struct ubus_object *obj,
 	short ret = 0;
 	int i = 0;
 	void *cookie = NULL;
-	ODBALMMSG3 data[32];
 	short number = 32;
+	ODBALMMSG3 data[32];
+	memset(data, 0, sizeof(ODBALMMSG3) * 32);
 
 	blobmsg_parse(policy_rdalmmsg3, __RDALMMSG3_MAX, tb, blob_data(msg), blob_len(msg));
 	if (!tb[RDALMMSG3_HANDLE] || !tb[RDALMMSG3_TYPE])
@@ -54,7 +55,7 @@ static int focas_rdalmmsg3(struct ubus_context *ctx, struct ubus_object *obj,
 	cookie = blobmsg_open_array(&b, "data");
 	for (i = 0; i < number; ++i) {
 		void* c2 = NULL;
-		ADD_ALMMSG(data[i]);
+		ADD_ALMMSG3(data[i]);
 	}
 	blobmsg_close_array(&b, cookie);
 

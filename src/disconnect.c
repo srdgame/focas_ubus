@@ -22,6 +22,7 @@ static int focas_disconnect(struct ubus_context *ctx, struct ubus_object *obj,
 
 	handle = blobmsg_get_u32(tb[DISCONNECT_HANDLE]);
 
+	printf("Disconnect from device. handle:%u\n", handle);
 	ret = cnc_resetconnect(handle);
 	if(ret != EW_OK)
 	{

@@ -36,7 +36,9 @@ static int focas_rdexecprog(struct ubus_context *ctx, struct ubus_object *obj,
 		blobmsg_add_u32(&b, "rc", -1);
 		blobmsg_add_string(&b, "message", "No enough memory!");
 		ubus_send_reply(ctx, req, b.head);
+		return 0;
 	}
+	memset(data, 0, sizeof(char) * length);
 	ret = cnc_rdexecprog(handle, &length, &blknum, data);
 
 	CHECK_FOCAS_RET(ret);

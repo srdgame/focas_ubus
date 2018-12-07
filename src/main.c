@@ -11,6 +11,7 @@
 
 #define MAX_CONNECTION 16
 #define INVALID_HANDLE 0xFFFF
+#define CONNECTION_FULL 0x7FFF
 
 struct focas_connection {
 	uint32_t hash[5]; // MD5SUM for ip and port, and peer if shared is false
@@ -20,6 +21,14 @@ struct focas_connection g_connections[MAX_CONNECTION];
 
 static struct ubus_context *ctx;
 static struct blob_buf b;
+
+static void init_connections() {
+	int i = 0;
+	memset(g_connections, 0, sizeof(struct focas_connection) * MAX_CONNECTION);
+	for (; i < MAX_CONNECTION; ++i) {
+		g_connections[i].handle = INVALID_HANDLE;
+	}
+}
 
 static short find_connection(const char* ip, uint16_t port, uint32_t peer, int shared, unsigned short *handle) {
 	uint32_t hash[4];
@@ -55,6 +64,7 @@ static short find_connection(const char* ip, uint16_t port, uint32_t peer, int s
 		for (i = 0; i < MAX_CONNECTION; ++i) {
 			if (g_connections[i].handle == INVALID_HANDLE) {
 				memcpy(g_connections[i].hash, hash, sizeof(uint32_t) * 4);
+				break;
 			}
 		}
 	}
@@ -108,6 +118,7 @@ static void close_connection(unsigned short handle) {
 #include "rdalmmsg2.c"
 //#include "rdalmmsg3.c"
 #include "getdtailerr.c"
+#include "rdprgnum.c"
 #include "rdexecprog.c"
 #include "rdpmcrng.c"
 #include "focas_quit.c"
@@ -134,6 +145,7 @@ static const struct ubus_method focas_methods[] = {
 	FOCAS_METHOD(rdalmmsg2),
 	//FOCAS_METHOD(rdalmmsg3),
 	FOCAS_METHOD(getdtailerr),
+	FOCAS_METHOD(rdprgnum),
 	FOCAS_METHOD(rdexecprog),
 	FOCAS_METHOD(rdpmcrng),
 
@@ -181,6 +193,7 @@ int main(int argc, char **argv)
 	argc -= optind;
 	argv += optind;
 
+	init_connections();
 	ret = cnc_startupprocess(0, "focas2.log");
 	if (ret != EW_OK) {
 		fprintf(stderr, "Failed initialize focas2 library\n");

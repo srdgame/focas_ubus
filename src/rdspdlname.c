@@ -22,6 +22,7 @@ static int focas_rdspdlname(struct ubus_context *ctx, struct ubus_object *obj,
 	void *cookie = NULL;
 	ODBSPDLNAME data[MAX_AXIS];
 	short number = MAX_AXIS;
+	memset(data, 0, sizeof(ODBSPDLNAME) * MAX_AXIS);
 
 	blobmsg_parse(policy_rdspdlname, __RDSPDLNAME_MAX, tb, blob_data(msg), blob_len(msg));
 	if (!tb[RDSPDLNAME_HANDLE])

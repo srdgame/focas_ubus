@@ -32,8 +32,9 @@ static int focas_rdalmmsg(struct ubus_context *ctx, struct ubus_object *obj,
 	short ret = 0;
 	int i = 0;
 	void *cookie = NULL;
-	ODBALMMSG data[32];
 	short number = 32;
+	ODBALMMSG data[32];
+	memset(data, 0, sizeof(ODBALMMSG) * 32);
 
 	blobmsg_parse(policy_rdalmmsg, __RDALMMSG_MAX, tb, blob_data(msg), blob_len(msg));
 	if (!tb[RDALMMSG_HANDLE] || !tb[RDALMMSG_TYPE])

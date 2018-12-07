@@ -32,8 +32,9 @@ static int focas_rdposition(struct ubus_context *ctx, struct ubus_object *obj,
 	short ret = 0;
 	int i = 0;
 	void *cookie = NULL;
-	ODBPOS data[MAX_AXIS];
 	short number = MAX_AXIS;
+	ODBPOS data[MAX_AXIS];
+	memset(data, 0, sizeof(ODBPOS) * MAX_AXIS);
 
 	blobmsg_parse(policy_rdposition, __RDPOSITION_MAX, tb, blob_data(msg), blob_len(msg));
 	if (!tb[RDPOSITION_HANDLE])

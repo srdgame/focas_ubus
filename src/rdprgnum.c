@@ -16,6 +16,7 @@ static int focas_rdprgnum(struct ubus_context *ctx, struct ubus_object *obj,
 	unsigned short handle = 0;
 	short ret = 0;
 	ODBPRO data;
+	memset(&data, 0, sizeof(data));
 
 	blobmsg_parse(policy_rdprgnum, __RDPRGNUM_MAX, tb, blob_data(msg), blob_len(msg));
 	if (!tb[RDPRGNUM_HANDLE])

@@ -1,7 +1,7 @@
 
 enum {
     AXIS_HANDLE,
-	AXIS_FUNCTION,
+    AXIS_FUNCTION,
     AXIS_INDEX,
     AXIS_INDEX2,
     __AXIS_MAX
@@ -38,16 +38,20 @@ static int focas_axis(struct ubus_context *ctx, struct ubus_object *obj,
 	int i = 0;
 	void *cookie = NULL;
 	ODBAXIS data;
+	memset(&data, 0, sizeof(data));
 
 	blobmsg_parse(policy_axis, __AXIS_MAX, tb, blob_data(msg), blob_len(msg));
 	if (!tb[AXIS_HANDLE] || !tb[AXIS_FUNCTION])
 		return UBUS_STATUS_INVALID_ARGUMENT;
 
 	handle = blobmsg_get_u32(tb[AXIS_HANDLE]);
+	func = blobmsg_get_string(tb[AXIS_FUNCTION]);
 	if (tb[AXIS_INDEX])
 		index = blobmsg_get_u32(tb[AXIS_INDEX]);
 	if (tb[AXIS_INDEX2])
 		index2 = blobmsg_get_u32(tb[AXIS_INDEX2]);
+
+	//fprintf(stderr, "Read axis handle:%u function:%s index:%d index2:%d\n", handle, func, index, index2);
 
 	MAP_FUNCTION(absolute)
 	//MAP_FUNCTION(absolute_bg)
@@ -61,7 +65,7 @@ static int focas_axis(struct ubus_context *ctx, struct ubus_object *obj,
 	MAP_FUNCTION(relative2)
 	//MAP_FUNCTION(relative_bg)
 	MAP_FUNCTION(distance)
-	MAP_FUNCTION(distance2)
+	//MAP_FUNCTION(distance2)
 	//MAP_FUNCTION(distancem)
 	MAP_FUNCTION(skip)
 	MAP_FUNCTION(srvdelay)

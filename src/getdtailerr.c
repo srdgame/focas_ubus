@@ -16,6 +16,7 @@ static int focas_getdtailerr(struct ubus_context *ctx, struct ubus_object *obj,
 	unsigned short handle = 0;
 	short ret = 0;
 	ODBERR data;
+	memset(&data, 0, sizeof(data));
 
 	blobmsg_parse(policy_getdtailerr, __GETDTAILERR_MAX, tb, blob_data(msg), blob_len(msg));
 	if (!tb[GETDTAILERR_HANDLE])
