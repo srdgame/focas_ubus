@@ -194,7 +194,7 @@ int main(int argc, char **argv)
 	argv += optind;
 
 	init_connections();
-	ret = cnc_startupprocess(0, "focas2.log");
+	ret = cnc_startupprocess(0, "/var/log/focas2.log");
 	if (ret != EW_OK) {
 		fprintf(stderr, "Failed initialize focas2 library\n");
 		return -1;
