@@ -45,7 +45,7 @@ project "libubus-static"
 
 	defines {
 		"UBUS_MAX_MSGLEN=1048576",
-		'UBUS_UNIX_SOCKET="/var/run/ubus.sock"'
+		'UBUS_UNIX_SOCKET="/var/run/ubus/ubus.sock"'
 	}
 	includedirs { 
 		".",
