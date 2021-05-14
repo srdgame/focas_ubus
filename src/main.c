@@ -122,6 +122,7 @@ static void close_connection(unsigned short handle) {
 #include "rdexecprog.c"
 #include "rdpmcrng.c"
 #include "focas_quit.c"
+#include "rdcurrent.c"
 
 #define FOCAS_METHOD(NAME) \
 	UBUS_METHOD(#NAME, focas_##NAME, policy_##NAME)
@@ -148,6 +149,7 @@ static const struct ubus_method focas_methods[] = {
 	FOCAS_METHOD(rdprgnum),
 	FOCAS_METHOD(rdexecprog),
 	FOCAS_METHOD(rdpmcrng),
+	FOCAS_METHOD(rdcurrent),
 
 	FOCAS_METHOD(quit),
 };
