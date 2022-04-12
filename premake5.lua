@@ -1,7 +1,6 @@
 -- A solution
 workspace "focas_ubus"
 	configurations { "Debug", "Release"}
-	location "build"
 	
 project "focas_ubus"
 	kind "ConsoleApp"
@@ -15,14 +14,13 @@ project "focas_ubus"
 		"./src",
 		"./deps",
 		"./deps/ubus",
-		"./focas"
+		"./fwlib"
 	}
 	files {
 		"./src/main.c" 
 	}
 	libdirs {
-		"./focas/x86"
-		--"./focas/Fwlib/Linux/arm"
+		"./fwlib"
 	}
 	links { "libubus-static", "libubox-static", "libjson-c-static", "fwlib32", "pthread", "rt"}
 

@@ -123,6 +123,7 @@ static void close_connection(unsigned short handle) {
 #include "rdpmcrng.c"
 #include "focas_quit.c"
 #include "rdcurrent.c"
+#include "rdlife.c"
 
 #define FOCAS_METHOD(NAME) \
 	UBUS_METHOD(#NAME, focas_##NAME, policy_##NAME)

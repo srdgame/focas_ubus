@@ -29,7 +29,7 @@ static int focas_rdcurrent(struct ubus_context *ctx, struct ubus_object *obj,
 	CHECK_FOCAS_RET(ret);
 	blob_buf_init(&b, 0);
 	blobmsg_add_u32(&b, "rc", ret);
-	blobmsg_add_u32(&b, "data", data.data);
+	blobmsg_add_u32(&b, "data", data);
 	ubus_send_reply(ctx, req, b.head);
 
 	return 0;

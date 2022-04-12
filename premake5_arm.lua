@@ -1,7 +1,6 @@
 -- A solution
 workspace "focas_ubus"
 	configurations { "Debug", "Release"}
-	location "build"
 	
 project "focas_ubus"
 	kind "ConsoleApp"
